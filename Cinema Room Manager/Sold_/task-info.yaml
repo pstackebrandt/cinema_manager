@@ -125,6 +125,12 @@ files:
         }
     }
   learner_created: false
+- name: test/cinema/CalcIncomeTest.kt
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/138/stages/736/implement#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Wed, 16 Dec 2020 20:38:37 UTC
 record: -1
