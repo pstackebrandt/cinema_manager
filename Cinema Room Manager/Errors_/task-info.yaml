@@ -597,6 +597,68 @@ files:
         }
     }
   learner_created: false
+- name: test/cinema/CalcIncomeTest.kt
+  visible: true
+  text: |-
+    package cinema
+
+    import org.junit.Test
+
+    import org.junit.Assert.*
+
+    class CalcIncomeTest {
+        @Test
+        fun seats_for_small_room() {
+            assertTrue(true)
+        }
+
+        class GetCheapSeatsTest {
+            @Test
+            fun should_return_0_seats_for_small_room() {
+                val cinema = Cinema()
+                var actual = cinema.getCheapSeats(2, 4)
+                assertEquals(0, actual)
+            }
+
+            @Test
+            fun should_return_seats_for_big_room_with_no_odd_rows() {
+                val cinema = Cinema()
+                var actual = cinema.getCheapSeats(10, 7)
+                assertEquals(35, actual)
+            }
+
+            @Test
+            fun should_return_seats_for_big_room_with_odd_rows() {
+                val cinema = Cinema()
+                var actual = cinema.getCheapSeats(9, 7)
+                assertEquals(35, actual)
+            }
+        }
+
+        class GetExpensiveSeatsTest {
+            @Test
+            fun should_return_seats_for_big_room() {
+                val cinema = Cinema()
+                var actual = cinema.getExpensiveSeats(2, 4)
+                assertEquals(8, actual)
+            }
+
+            @Test
+            fun should_return_seats_for_big_room_with_no_odd_rows() {
+                val cinema = Cinema()
+                var actual = cinema.getExpensiveSeats(10, 7)
+                assertEquals(35, actual)
+            }
+
+            @Test
+            fun should_return_seats_for_big_room_with_odd_rows() {
+                val cinema = Cinema()
+                var actual = cinema.getExpensiveSeats(9, 7)
+                assertEquals(28, actual)
+            }
+        }
+    }
+  learner_created: false
 feedback_link: https://hyperskill.org/projects/138/stages/739/implement#comment
 status: Unchecked
 record: -1
