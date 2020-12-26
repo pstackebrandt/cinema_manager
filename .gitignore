@@ -152,3 +152,4 @@ build-history.bin
 /Cinema Room Manager/task/build/kotlin/compileKotlin/caches-jvm/jvm/kotlin/proto.tab
 /.idea/frameworkLessonHistory/storage.storageData
 /.idea/vcs.xml
+/.gradle/buildOutputCleanup

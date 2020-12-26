@@ -1,25 +1,28 @@
 package cinema
 
+import java.util.*
+
 fun main() {
-    val show = true
     val calcIncome = false
-    val showSeatPrice = true
 
     val cinema = Cinema()
-    cinema.createRoom()
+    cinema.start()
+
+    // statistics
+    // current income
+    // total income
+    // number of free seats
+    // percentage of occupancy
+//    "Number of purchased tickets: 0"
+//    "Percentage: 0.00%"
+//    "Current income: $0"
+//    "Total income: $360"
+
+    // buy free seat only
+    // "That ticket has already been purchased!"
+    // "Wrong input!"
     if (calcIncome) {
         cinema.calcIncome()
-    }
-    if (show) {
-        cinema.show()
-    }
-    if (showSeatPrice) {
-        val seat = cinema.getSeat()
-        val price = cinema.getSeatPrice(cinema.room, seat)
-
-        cinema.showSeatPrice(price)
-        cinema.addSeatRequest(cinema.room, seat)
-        cinema.show()
     }
 }
 
@@ -28,19 +31,53 @@ enum class SeatTypeNumber {
     Reserved
 }
 
-
 enum class SeatType {
     Expensive,
     Cheap
 }
 
 class Cinema {
-    private val expensiveSeatPrice = 10
     private val cheapSeatPrice = 8
-    var room: Room = Room(0, 0)
+    private val expensiveSeatPrice = 10
+    private var room: Room = Room(0, 0)
 
-    fun show() {
-        println("Cinema:")
+    fun start() {
+        createRoom()
+        showMenu()
+    }
+
+    private fun showMenu() {
+        while (true) {
+            when (chooseMenu()) {
+                1 -> {
+                    showRoom()
+                }
+                2 -> {
+                    val seat = getSeat()
+                    val price = getSeatPrice(room, seat)
+
+                    showSeatPrice(price)
+                    addSeatRequest(room, seat)
+                    showRoom()
+                }
+                else -> { // 0 -> exit
+                    return
+                }
+            }
+        }
+    }
+
+    private fun chooseMenu(): Int {
+        println("\n1. Show the seats")
+        println("2. Buy a ticket")
+        println("0. Exit")
+
+        val scanner = Scanner(System.`in`)
+        return scanner.nextInt()
+    }
+
+    private fun showRoom() {
+        println("\nCinema:")
         print(" ")
         repeat(room.seatsPerRow) { print(" ${it + 1}") }
         println()
@@ -66,12 +103,12 @@ class Cinema {
     }
 
     fun calcIncome() {
-        println("Total income:")
+        println("\nTotal income:")
         println("$${calcIncome(room.rowsCount, room.seatsPerRow)}")
     }
 
-    fun createRoom() {
-        println("Enter the number of rows:")
+    private fun createRoom() {
+        println("\nEnter the number of rows:")
         val rows = readLine()!!.toInt()
         println("Enter the number of seats in each row:")
         val seatsPerRow = readLine()!!.toInt()
@@ -104,19 +141,19 @@ class Cinema {
                 }
             }
 
-    fun getSeat(): Seat {
-        println("Enter a row number:")
+    private fun getSeat(): Seat {
+        println("\nEnter a row number:")
         val rowNumber = readLine()!!.toInt()
         println("Enter a seat number in that row:")
         val seatNumber = readLine()!!.toInt()
         return Seat(rowNumber, seatNumber)
     }
 
-    fun showSeatPrice(price: Int) {
+    private fun showSeatPrice(price: Int) {
         println("Ticket price: $${price}")
     }
 
-    fun getSeatPrice(room: Room, seat: Seat) =
+    private fun getSeatPrice(room: Room, seat: Seat) =
             when (getSeatType(room, seat)) {
                 SeatType.Expensive -> expensiveSeatPrice
                 SeatType.Cheap -> cheapSeatPrice
@@ -147,7 +184,7 @@ class Cinema {
     }
 
     private fun isSmallRoom(room: Room) = room.rowsCount * room.seatsPerRow <= 60
-    fun addSeatRequest(room: Room, seat: Seat) {
+    private fun addSeatRequest(room: Room, seat: Seat) {
         if (seat.isInitialized()) {
             room.rows[seat.rowNumber - 1][seat.seatNumber - 1] = SeatTypeNumber.Reserved.ordinal
         }

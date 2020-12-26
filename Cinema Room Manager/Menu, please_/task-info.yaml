@@ -353,21 +353,21 @@ files:
             @Test
             fun should_return_0_seats_for_small_room() {
                 val cinema = Cinema()
-                var actual = cinema.getCheapSeats(2, 4)
+                var actual = cinema.getCheapSeatsCount(2, 4)
                 assertEquals(0, actual)
             }
 
             @Test
             fun should_return_seats_for_big_room_with_no_odd_rows() {
                 val cinema = Cinema()
-                var actual = cinema.getCheapSeats(10, 7)
+                var actual = cinema.getCheapSeatsCount(10, 7)
                 assertEquals(35, actual)
             }
 
             @Test
             fun should_return_seats_for_big_room_with_odd_rows() {
                 val cinema = Cinema()
-                var actual = cinema.getCheapSeats(9, 7)
+                var actual = cinema.getCheapSeatsCount(9, 7)
                 assertEquals(35, actual)
             }
         }
@@ -376,26 +376,52 @@ files:
             @Test
             fun should_return_seats_for_big_room() {
                 val cinema = Cinema()
-                var actual = cinema.getExpensiveSeats(2, 4)
+                var actual = cinema.getExpensiveSeatsCount(2, 4)
                 assertEquals(8, actual)
             }
 
             @Test
             fun should_return_seats_for_big_room_with_no_odd_rows() {
                 val cinema = Cinema()
-                var actual = cinema.getExpensiveSeats(10, 7)
+                var actual = cinema.getExpensiveSeatsCount(10, 7)
                 assertEquals(35, actual)
             }
 
             @Test
             fun should_return_seats_for_big_room_with_odd_rows() {
                 val cinema = Cinema()
-                var actual = cinema.getExpensiveSeats(9, 7)
+                var actual = cinema.getExpensiveSeatsCount(9, 7)
                 assertEquals(28, actual)
             }
         }
     }
   learner_created: false
+- name: src/cinema/Seat.kt
+  visible: true
+  text: |+
+    package cinema
+
+    data class Seat(val rowNumber: Int, val seatNumber: Int){
+        fun isInitialized() = rowNumber > 0 || seatNumber > 0
+    }
+
+
+  learner_created: true
+- name: src/cinema/Room.kt
+  visible: true
+  text: |-
+    package cinema
+
+    data class Room(val rowsCount: Int, val seatsPerRow: Int) {
+        var rows = Array(rowsCount) { Array(seatsPerRow) { 0 } }
+    }
+  learner_created: true
+- name: test/cinema/SeatTest.kt
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/138/stages/738/implement#comment
-status: Unchecked
-record: -1
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Wed, 23 Dec 2020 20:01:13 UTC
+record: 1
