@@ -236,7 +236,17 @@ files:
                     "Your output should contain 'Enter a seat number in that row:'.");
             }
 
-            program.execute("5");
+            output = program.execute("5").toLowerCase();
+
+            if (!output.contains("ticket price")) {
+                return CheckResult.wrong("After entering a row number and a seat number in that row you should print" +
+                    " the ticket price.\n" +
+                    "Your output should contain 'Ticket price:'.");
+            }
+
+            if (!output.contains("8")) {
+                return CheckResult.wrong("Looks like you miscalculated the ticket price. Can't find '$8' in your output.");
+            }
 
             output = program.execute("2\n9\n5");
 
@@ -679,31 +689,15 @@ files:
         var rows = Array(rowsCount) { Array(seatsPerRow) { 0 } }
     }
   learner_created: true
+- name: test/cinema/RoomKtTest.kt
+  visible: true
+  learner_created: true
+- name: test/cinema/CinemaTest.kt
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/138/stages/739/implement#comment
 status: Failed
 feedback:
-  message: |-
-    Wrong answer in test #1
-
-    Your menu should contain 4 items:
-    1. Show the seats
-    2. Buy a ticket
-    3. Statistics
-    0. Exit
-
-    Please find below the output of your program during this failed test.
-    Note that the &#39;&gt;&#39; character indicates the beginning of the input line.
-
-    ---
-
-
-    Enter the number of rows:
-    &gt; 7
-    Enter the number of seats in each row:
-    &gt; 8
-
-    1. Show the seats
-    2. Buy a ticket
-    0. Exit
-  time: Wed, 23 Dec 2020 20:13:13 UTC
+  message: Index -1 out of bounds for length 3
+  time: Sun, 27 Dec 2020 20:08:20 UTC
 record: -1

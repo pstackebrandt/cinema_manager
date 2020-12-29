@@ -221,7 +221,17 @@ public class CinemaTests extends StageTest<String> {
                 "Your output should contain 'Enter a seat number in that row:'.");
         }
 
-        program.execute("5");
+        output = program.execute("5").toLowerCase();
+
+        if (!output.contains("ticket price")) {
+            return CheckResult.wrong("After entering a row number and a seat number in that row you should print" +
+                " the ticket price.\n" +
+                "Your output should contain 'Ticket price:'.");
+        }
+
+        if (!output.contains("8")) {
+            return CheckResult.wrong("Looks like you miscalculated the ticket price. Can't find '$8' in your output.");
+        }
 
         output = program.execute("2\n9\n5");
 
