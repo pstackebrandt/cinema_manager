@@ -24,7 +24,7 @@ data class Room(val rowsCount: Int, val seatsPerRow: Int) {
 
     internal fun bookSeat(seat: Seat) {
         if (seat.isInitialized()) {
-            this.rows[seat.businessRowNumber - 1][seat.businessSeatNumber - 1] = SeatTypeNumber.Reserved.ordinal
+            this.rows[seat.technicalRowNumber][seat.technicalSeatNumber] = SeatTypeNumber.Reserved.ordinal
         }
     }
 
@@ -78,9 +78,9 @@ data class Room(val rowsCount: Int, val seatsPerRow: Int) {
             getBookedExpensiveSeatsCount(this) * Cinema.expensiveSeatPrice
 
     internal fun getExpensiveRows(): List<Array<Int>> {
-        val rowNumbers = getBusinessRowNumbersOfExpensiveRows().toTechnicalNumbers()
+        val rowNumbers = getBusinessRowNumbersOfExpensiveRows().toTechnicalValue()
         val rows = mutableListOf<Array<Int>>()
-        if (rowNumbers == -1..-1){
+        if (rowNumbers == -1..-1) {
             return rows
         }
         for (i in rowNumbers) {
@@ -90,9 +90,9 @@ data class Room(val rowsCount: Int, val seatsPerRow: Int) {
     }
 
     private fun cheapRows(): List<Array<Int>> {
-        val rowNumbers = getBusinessRowNumbersOfCheapRows().toTechnicalNumbers()
+        val rowNumbers = getBusinessRowNumbersOfCheapRows().toTechnicalValue()
         val rows = mutableListOf<Array<Int>>()
-        if (rowNumbers == -1..-1){
+        if (rowNumbers == -1..-1) {
             return rows
         }
         for (i in rowNumbers) {
@@ -106,6 +106,13 @@ data class Room(val rowsCount: Int, val seatsPerRow: Int) {
     fun calcIncome(rows: Int, seatsPerRow: Int) =
             getCheapSeatsCount(rows, seatsPerRow) * Cinema.cheapSeatPrice +
                     getExpensiveSeatsCount(rows, seatsPerRow) * Cinema.expensiveSeatPrice
+
+    fun isSeatFree(seat: Seat) =
+            rows[seat.technicalRowNumber][seat.technicalSeatNumber] == SeatTypeNumber.Free.ordinal
+
+    fun isSeatPositionValid(seat: Seat) =
+            seat.businessRowNumber in 1..rowsCount &&
+                    seat.businessSeatNumber in 1..seatsPerRow
 
     companion object {
         internal fun getCheapSeatsCount(rows: Int, seatsPerRow: Int): Int =
@@ -155,6 +162,6 @@ data class Room(val rowsCount: Int, val seatsPerRow: Int) {
 }
 
 /* Transforms business values (1..n) to technical values (0..n-1) */
-fun IntRange.toTechnicalNumbers() = this.first - 1 until this.last
+fun IntRange.toTechnicalValue() = this.first - 1 until this.last
 
 
