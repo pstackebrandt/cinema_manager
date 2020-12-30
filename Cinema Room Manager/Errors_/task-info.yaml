@@ -699,5 +699,9 @@ feedback_link: https://hyperskill.org/projects/138/stages/739/implement#comment
 status: Solved
 feedback:
   message: Congratulations!
+<<<<<<< HEAD
   time: Wed, 30 Dec 2020 16:24:17 UTC
+=======
+  time: Wed, 30 Dec 2020 16:16:09 UTC
+>>>>>>> 2d503667efbd5ffa7b7a4c81e60dfb2e7e26de81
 record: -1
