@@ -3,24 +3,8 @@ package cinema
 import java.util.*
 
 fun main() {
-    val calcIncome = false
-
     val cinema = Cinema()
     cinema.start()
-
-//     statistics
-//     current income
-//     total income
-//     number of free seats
-//     percentage of occupancy
-//    "Number of purchased tickets: 0"
-//    "Percentage: 0.00%"
-//    "Current income: $0"
-//    "Total income: $360"
-//
-//     buy free seat only
-//     "That ticket has already been purchased!"
-//     "Wrong input!"
 }
 
 enum class SeatTypeNumber {
@@ -130,11 +114,29 @@ class Cinema {
     }
 
     private fun getSeat(): Seat {
-        println("\nEnter a row number:")
-        val rowNumber = readLine()!!.toInt()
-        println("Enter a seat number in that row:")
-        val seatNumber = readLine()!!.toInt()
-        return Seat(rowNumber, seatNumber)
+        var askForSeat = true
+        var seat = Seat.default
+        while (askForSeat) {
+            println("\nEnter a row number:")
+            val rowNumber = readLine()!!.toInt()
+
+            println("Enter a seat number in that row:")
+            val seatNumber = readLine()!!.toInt()
+
+            seat = Seat(rowNumber, seatNumber)
+            if (!room.isSeatPositionValid(seat)) {
+                println("Wrong input!")
+            } else {
+
+                if (room.isSeatFree(seat)) {
+                    askForSeat = false
+                } else {
+                    println("\nThat ticket has already been purchased!")
+                }
+            }
+        }
+
+        return seat
     }
 
     companion object {
